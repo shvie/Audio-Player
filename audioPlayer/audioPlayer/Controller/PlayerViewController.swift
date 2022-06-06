@@ -12,14 +12,28 @@ class PlayerViewController: UIViewController {
     
     var player = AVAudioPlayer()
     var timer: Timer?
+    var storage = Song()
+    
+    var countSong = 1
     //MARK: - Elements
     let labelNameSongs: UILabel = {
+        let labelNameSongs = UILabel()
+        labelNameSongs.text = "label"
+        labelNameSongs.textColor = .lightGray
+        labelNameSongs.textAlignment = .center
+        labelNameSongs.alpha = 0.5
+        labelNameSongs.font = UIFont(name: "Helvetica Neue", size: 20)
+        labelNameSongs.translatesAutoresizingMaskIntoConstraints = false
+        return labelNameSongs
+    }()
+    
+    let labelNameArtist: UILabel = {
         let labelEndTimeDuration = UILabel()
         labelEndTimeDuration.text = "label"
         labelEndTimeDuration.textColor = .lightGray
         labelEndTimeDuration.textAlignment = .center
         labelEndTimeDuration.alpha = 0.5
-        labelEndTimeDuration.font = UIFont(name: "Helvetica Neue", size: 20)
+        labelEndTimeDuration.font = UIFont(name: "Helvetica Neue", size: 14)
         labelEndTimeDuration.translatesAutoresizingMaskIntoConstraints = false
         return labelEndTimeDuration
     }()
@@ -79,6 +93,7 @@ class PlayerViewController: UIViewController {
         buttonBack.translatesAutoresizingMaskIntoConstraints = false
         return buttonBack
     }()
+    
     let buttonPaused: UIButton = {
         let buttonPaused = UIButton()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
@@ -95,8 +110,9 @@ class PlayerViewController: UIViewController {
         self.view.backgroundColor = .cyan
         self.navigationItem.title = "Player"
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        durationSlider.addTarget(self, action: #selector(valueChanged(_:)), for: .touchUpInside)
         buttonPaused.addTarget(self, action: #selector(pressPauseButton(_:)), for: .touchUpInside)
+        buttonSelected.addTarget(self, action: #selector(pressSelectedButton(_:)), for: .touchUpInside)
+        buttonBack.addTarget(self, action: #selector(pressBackButton(_:)), for: .touchUpInside)
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -104,8 +120,31 @@ class PlayerViewController: UIViewController {
     }
 
     //MARK: - Methods
-
-
+    //Действие для кнопки назад в плеере
+    @objc func pressBackButton(_ sender: UIButton){
+        if countSong == 0 {
+            countSong = storage.urlFile.count
+        }
+        guard countSong > storage.urlFile.count else {
+                countSong = countSong - 1
+            print(countSong)
+            settingsPlayer(titleSong: storage.urlFile[countSong], nameSong: storage.nameSongs[countSong])
+            return
+            }
+        }
+    //Действие для кнопки дальше в плеере
+    @objc func pressSelectedButton(_ sender: UIButton) {
+        guard countSong >= storage.urlFile.count else {
+            countSong += 1
+            print(countSong)
+            settingsPlayer(titleSong: storage.urlFile[countSong - 1], nameSong: storage.nameSongs[countSong - 1])
+            if countSong == storage.urlFile.count {
+                countSong = 0
+            }
+            return
+        }
+    }
+    //Действие для кнопки паузы в плеере
     @objc func pressPauseButton(_ sender: UIButton) {
         if player.isPlaying == true {
             let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
@@ -118,6 +157,7 @@ class PlayerViewController: UIViewController {
             
         }
     }
+    //таймер для отслеживания времени трека
     @objc func updateTimer() {
         self.durationSlider.value = Float(player.currentTime)
         
@@ -131,15 +171,21 @@ class PlayerViewController: UIViewController {
         let diffsec = Int(diffTime.truncatingRemainder(dividingBy: 60))
         labelEndTimeDuration.text = NSString(format: "%02d:%02d", diffmin, diffsec) as String
     }
-    @objc func valueChanged(_ sender: UISlider) {
-        self.player.currentTime = TimeInterval(self.durationSlider.value)
-    }
-    func settingsPlayer(titleSong: String) {
+    //включение выбранного трека
+    func settingsPlayer(titleSong: String, nameSong: String) {
+        labelNameArtist.text = nameSong.components(separatedBy: " ").dropLast().joined(separator: " ")
+        
+        let strWith = nameSong.split(separator: " ")
+        let nameSongs = String(strWith.suffix(1).joined(separator: [" "]))
+        labelNameSongs.text = nameSongs
+        
         let url = URL(fileURLWithPath: titleSong)
         do {
             player = try AVAudioPlayer(contentsOf: url)
             durationSlider.maximumValue = Float(player.duration)
-            
+            player.play()
+            let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
+            buttonPaused.setImage(UIImage(systemName: "pause.circle.fill", withConfiguration: largeConfig), for: .normal)
         } catch {
             print(error)
         }
@@ -155,8 +201,9 @@ class PlayerViewController: UIViewController {
         self.view.addSubview(durationSlider)
         self.view.addSubview(labelEndTimeDuration)
         self.view.addSubview(imageAlbum)
-        self.view.addSubview(labelNameSongs)
+        self.view.addSubview(labelNameArtist)
         self.view.addSubview(labelCurrentTimeDuration)
+        self.view.addSubview(labelNameSongs)
         
         //Constraints for "buttonBack"
         buttonBack.centerYAnchor.constraint(equalTo: buttonPaused.centerYAnchor).isActive = true
@@ -193,14 +240,17 @@ class PlayerViewController: UIViewController {
         imageAlbum.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         imageAlbum.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1/2).isActive = true
         
-        //Constraints for "labelNameSongs"
-        labelNameSongs.leftAnchor.constraint(equalTo: imageAlbum.leftAnchor).isActive = true
-        labelNameSongs.topAnchor.constraint(equalTo: imageAlbum.bottomAnchor, constant: 10).isActive = true
+        //Constraints for "labelNameArtist"
+        labelNameArtist.leftAnchor.constraint(equalTo: imageAlbum.leftAnchor).isActive = true
+        labelNameArtist.topAnchor.constraint(equalTo: labelNameSongs.bottomAnchor, constant: 5).isActive = true
         
         //Constraints for "labelCurrentTimeDuration"
         labelCurrentTimeDuration.leftAnchor.constraint(equalTo: durationSlider.leftAnchor).isActive = true
         labelCurrentTimeDuration.topAnchor.constraint(equalTo: durationSlider.bottomAnchor, constant: 2).isActive = true
         
+        //Constraints for "labelNameSongs"
+        labelNameSongs.leftAnchor.constraint(equalTo: imageAlbum.leftAnchor).isActive = true
+        labelNameSongs.topAnchor.constraint(equalTo: imageAlbum.bottomAnchor, constant: 10).isActive = true
     }
     
     
