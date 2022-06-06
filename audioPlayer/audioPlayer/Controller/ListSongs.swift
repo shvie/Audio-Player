@@ -66,7 +66,7 @@ class ListSongs: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
         self.navigationController?.pushViewController(playerVC, animated: true)
-        playerVC.settingsPlayer(titleSong: data.urlFile[indexPath.row])
+        playerVC.settingsPlayer(titleSong: data.urlFile[indexPath.row], nameSong: data.nameSongs[indexPath.row])
     }
     
 }
