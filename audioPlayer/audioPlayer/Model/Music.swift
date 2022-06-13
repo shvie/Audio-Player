@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SongProtocol {
     var nameSongs: [String] {get}
@@ -14,7 +15,10 @@ protocol SongProtocol {
 
 struct Song: SongProtocol {
     //MARK: индексы названий и индексы путей к файлам соответствуют друг другу
-    
+    var imageAlbum: [String] = {
+        let way = Bundle.main.paths(forResourcesOfType: ".png", inDirectory: "")
+        return way
+    }()
     //Путь к файлам для аудио плеера
     var urlFile: [String] = {
         let way = Bundle.main.paths(forResourcesOfType: ".mp3", inDirectory: "")

@@ -28,11 +28,13 @@ class ListSongs: UITableViewController {
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.rowHeight = 50
         print(data.nameSongs)
-        setupButton()
+        self.tableView.inputAccessoryView?.addSubview(UIImageView(image: UIImage(systemName: "circle")))
+        //setupButton()
+        
     }
     //MARK: - Methods
     @objc func selectedScene() {
-        let reference = PlayerViewController()
+        lazy var reference = PlayerViewController()
         self.navigationController?.present(reference, animated: true)
     }
     
@@ -60,12 +62,13 @@ class ListSongs: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
         cell.labelNameSongs.text = data.nameSongs[indexPath.row]
+        cell.trackImage.image = UIImage(named: "thexx")
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
-        self.navigationController?.pushViewController(playerVC, animated: true)
+        self.navigationController?.present(playerVC, animated: true)
         playerVC.settingsPlayer(titleSong: data.urlFile[indexPath.row], nameSong: data.nameSongs[indexPath.row])
     }
     

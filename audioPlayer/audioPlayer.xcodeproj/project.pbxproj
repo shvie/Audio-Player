@@ -12,13 +12,14 @@
 		047369C1284BF9F800398CAA /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047369C0284BF9F800398CAA /* Music.swift */; };
 		047369C5284CB79800398CAA /* Maya-Jane-Coles-Bo&Wing.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 047369C4284CB79800398CAA /* Maya-Jane-Coles-Bo&Wing.mp3 */; };
 		047369C7284CB84000398CAA /* Anivar-Taksi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 047369C6284CB84000398CAA /* Anivar-Taksi.mp3 */; };
-		047369C9284CC38D00398CAA /* Masha-Pjatnica-Dusha.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 047369C8284CC38D00398CAA /* Masha-Pjatnica-Dusha.mp3 */; };
 		04A6C0A82846C6F100234FFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6C0A72846C6F100234FFE /* AppDelegate.swift */; };
 		04A6C0AA2846C6F100234FFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6C0A92846C6F100234FFE /* SceneDelegate.swift */; };
 		04A6C0AF2846C6F100234FFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A6C0AD2846C6F100234FFE /* Main.storyboard */; };
 		04A6C0B12846C6F400234FFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04A6C0B02846C6F400234FFE /* Assets.xcassets */; };
 		04A6C0B42846C6F400234FFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04A6C0B22846C6F400234FFE /* LaunchScreen.storyboard */; };
 		04A6C0BC2847840900234FFE /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A6C0BB2847840900234FFE /* PlayerViewController.swift */; };
+		04B49A472857830F00C48DCA /* The-хx-Crystalised.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 04B49A462857830F00C48DCA /* The-хx-Crystalised.mp3 */; };
+		04B49A492857B49000C48DCA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B49A482857B49000C48DCA /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +28,6 @@
 		047369C0284BF9F800398CAA /* Music.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
 		047369C4284CB79800398CAA /* Maya-Jane-Coles-Bo&Wing.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Maya-Jane-Coles-Bo&Wing.mp3"; sourceTree = "<group>"; };
 		047369C6284CB84000398CAA /* Anivar-Taksi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Anivar-Taksi.mp3"; sourceTree = "<group>"; };
-		047369C8284CC38D00398CAA /* Masha-Pjatnica-Dusha.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Masha-Pjatnica-Dusha.mp3"; sourceTree = "<group>"; };
 		04A6C0A42846C6F100234FFE /* audioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = audioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04A6C0A72846C6F100234FFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04A6C0A92846C6F100234FFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +36,8 @@
 		04A6C0B32846C6F400234FFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04A6C0B52846C6F400234FFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04A6C0BB2847840900234FFE /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		04B49A462857830F00C48DCA /* The-хx-Crystalised.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "The-хx-Crystalised.mp3"; sourceTree = "<group>"; };
+		04B49A482857B49000C48DCA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +56,7 @@
 			children = (
 				047369C6284CB84000398CAA /* Anivar-Taksi.mp3 */,
 				047369C4284CB79800398CAA /* Maya-Jane-Coles-Bo&Wing.mp3 */,
-				047369C8284CC38D00398CAA /* Masha-Pjatnica-Dusha.mp3 */,
+				04B49A462857830F00C48DCA /* The-хx-Crystalised.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -105,6 +107,7 @@
 			children = (
 				047369B9284BDDBC00398CAA /* Sounds */,
 				04A6C0A72846C6F100234FFE /* AppDelegate.swift */,
+				04B49A482857B49000C48DCA /* ViewController.swift */,
 				04A6C0A92846C6F100234FFE /* SceneDelegate.swift */,
 				047369CB284CC40700398CAA /* Controller */,
 				047369CA284CC3F000398CAA /* Cell */,
@@ -180,7 +183,7 @@
 				047369C5284CB79800398CAA /* Maya-Jane-Coles-Bo&Wing.mp3 in Resources */,
 				04A6C0B12846C6F400234FFE /* Assets.xcassets in Resources */,
 				04A6C0AF2846C6F100234FFE /* Main.storyboard in Resources */,
-				047369C9284CC38D00398CAA /* Masha-Pjatnica-Dusha.mp3 in Resources */,
+				04B49A472857830F00C48DCA /* The-хx-Crystalised.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +198,7 @@
 				04A6C0BC2847840900234FFE /* PlayerViewController.swift in Sources */,
 				047369BB284BEC3000398CAA /* TableViewCell.swift in Sources */,
 				04A6C0A82846C6F100234FFE /* AppDelegate.swift in Sources */,
+				04B49A492857B49000C48DCA /* ViewController.swift in Sources */,
 				04A6C0AA2846C6F100234FFE /* SceneDelegate.swift in Sources */,
 				047369C1284BF9F800398CAA /* Music.swift in Sources */,
 			);
