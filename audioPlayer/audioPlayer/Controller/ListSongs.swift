@@ -4,50 +4,19 @@
 //
 //  Created by Vitaliy Shmelev on 04.06.2022.
 //
-
+import Foundation
 import UIKit
 
 class ListSongs: UITableViewController {
     
-    var data = Song()
-    
    //MARK: - Elements
-    let button: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blue
-        button.setTitle("Переход на следущую сцену", for: .normal)
-        button.isUserInteractionEnabled = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    var storage: [Song] = Song.getSongs()
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Songs"
-        button.addTarget(self, action: #selector(selectedScene), for: .touchUpInside)
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.rowHeight = 50
-        print(data.nameSongs)
-        self.tableView.inputAccessoryView?.addSubview(UIImageView(image: UIImage(systemName: "circle")))
-        //setupButton()
-        
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: "Cells")
     }
-    //MARK: - Methods
-    @objc func selectedScene() {
-        lazy var reference = PlayerViewController()
-        self.navigationController?.present(reference, animated: true)
-    }
-    
-    //MARK: - Constraints
-    func setupButton() {
-        view.addSubview(button)
-        button.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 20).isActive = true
-        button.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20).isActive = true
-        button.bottomAnchor.constraint(equalTo: self.tableView.bottomAnchor, constant: 1).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    }
-
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -56,21 +25,45 @@ class ListSongs: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return data.nameSongs.count
+        return storage.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
-        cell.labelNameSongs.text = data.nameSongs[indexPath.row]
-        cell.trackImage.image = UIImage(named: "thexx")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cells", for: indexPath) as! TableViewCell
+        cell.labelNameSongs.text = storage[indexPath.row].nameSong
+        cell.trackImage.image = storage[indexPath.row].image
+        cell.labelNameArtist.text = storage[indexPath.row].artist
+        cell.trackImage.layer.cornerRadius = 10
+
+        cell.actionHandler = {[unowned self] cell in
+            let content = "Смотри что я нашел - \(cell.labelNameArtist.text!)" + "-" + "\(cell.labelNameSongs.text!)"
+            let image = cell.trackImage.image!
+            let devUrl = URL(string: "https://github.com/shvie")!
+            let vc = UIActivityViewController(activityItems: [devUrl, content,image], applicationActivities: nil)
+            DispatchQueue.main.async {
+            self.present(vc, animated: true)
+            }
+            
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let playerVC = PlayerViewController()
+        playerVC.storage = self.storage
+        playerVC.player(elementForPlay: storage[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: true)
         self.navigationController?.present(playerVC, animated: true)
-        playerVC.settingsPlayer(titleSong: data.urlFile[indexPath.row], nameSong: data.nameSongs[indexPath.row])
+        
     }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = sqrt(self.view.frame.size.height * self.view.frame.size.width) / 8
+        
+        return height
+    }
+
+    
+
     
 }
 
